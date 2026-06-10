@@ -5,7 +5,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Betty</title>
   </head>
-    <body class="text-center">
+    <body id="body" class="bg-white text-center">
 
       <h1 class="text-4xl font-bold text-slate-500">Betty is a tuff dog.</h1>
       <p class="text-slate-600">Betty loves bones!</p>
@@ -20,19 +20,42 @@
              width="300"
              class="rounded-3xl shadow-lg">
       </button>
+      <br><br>
       <p class="text-slate-600">Click to give Betty an extra bone!</p>
-
+      <br>
+      <div class="mt-8">
+        <button id="darkmode-toggle" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-full shadow transition-all active:scale-90 cursor-pointer">
+          Switch mode.
+        </button>
+      </div>
 
       <script>
         let score = 0;
         const textScore = document.getElementById("scoredisplay");
         const clickButton = document.getElementById("plusone");
 
+        const body = document.getElementById("body");
+        const darkModeToggle = document.getElementById("darkmode-toggle");
+        darkModeToggle.addEventListener("click", () => {
+          body.classList.toggle("bg-white");
+          body.classList.toggle("bg-black");
+
+          textScore.classList.toggle("text-slate-700")
+          textScore.classList.toggle("text-slate-400")
+
+          darkModeToggle.classList.toggle("bg-slate-200")
+          darkModeToggle.classList.toggle("bg-slate-600")
+          darkModeToggle.classList.toggle("text-slate-600")
+          darkModeToggle.classList.toggle("text-slate-200")
+          darkModeToggle.classList.toggle("hover:bg-slate-300")
+          darkModeToggle.classList.toggle("hover:bg-slate-500")
+        });
+
         clickButton.addEventListener("click", (event) => {
           score = score + 1;
           textScore.textContent = score;
           bonesEffect(event);
-        })
+        });
 
         function bonesEffect(event) {
           const bonesCount = 7;
