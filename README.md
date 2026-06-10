@@ -1,7 +1,6 @@
-# Betynky stránka
-## tuto stránku jsem udělal protože je betynka tuff pesan, jiný účel nemá
-*Betynka je černý jezevčík*
+# Betty website
+## I made this website because i love my dog and it is tuff. 
+### Betty is a black dachshund.*
 
-## Preview
-
-![Website Preview](https://cdn.hackclub.com/019eb275-593e-754b-8508-218596884ca7/screenshot.png)
+## Preview:
+*I lost it :(*
