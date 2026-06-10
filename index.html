@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>My Page</title>
   </head>
-    <body class="text-center bg-black">
+    <body class="text-center">
       <h1 class="text-red-500 text-lg">Betynka je tuff pes</h1>
       <p class="text-pink-600">betynka má ráda kostičky</p>
-      <p>zmena</p>
+      <div id="scoredisplay">0</div>
+      <button id="plusone">
         <img src="https://yumove.co.uk/cdn/shop/files/Dachshund.jpg?v=1749573704&width=550" alt="Pes co vypadá jako betyna" width="300">
-    
+      </button>
+
+      <script>
+        let score = 0;
+        const textScore = document.getElementById("scoredisplay");
+        const clickButton = document.getElementById("plusone");
+
+        clickButton.addEventListener("click", () => {
+          score = score + 1;
+          textScore.textContent = score;
+
+        })
+      </script>
     </body>
 
 </html>
