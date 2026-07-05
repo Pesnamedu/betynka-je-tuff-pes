@@ -1,100 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class'
+      }
+    </script>
     <title>Betty</title>
   </head>
-    <body id="body" class="bg-white text-center">
+  <body id="body" class="bg-white dark:bg-black text-center transition-colors duration-300">
 
-      <h1 class="text-4xl font-bold text-slate-500">Betty is a tuff dog.</h1>
-      <p class="text-slate-600">Betty loves bones!</p>
+    <h1 class="text-4xl font-bold text-slate-500 dark:text-slate-400 mt-6">Betty is a tuff dog.</h1>
+    <p class="text-slate-600 dark:text-slate-300">Betty loves bones!</p>
 
-      <div id="scoredisplay" class="text-4xl font-extrabold text-slate-700 mb-4">0</div>
+    <div id="scoredisplay" class="text-4xl font-extrabold text-slate-700 dark:text-slate-200 mb-4">0</div>
 
-      <button id="plusone"
-              class="transition-transform duration-100 active:scale-90 hover:scale-110 focus:outline-none cursor-pointer">
+    <button id="plusone"
+            class="transition-transform duration-100 active:scale-90 hover:scale-110 focus:outline-none cursor-pointer">
+      <img src="https://yumove.co.uk/cdn/shop/files/Dachshund.jpg?v=1749573704&width=550"
+           alt="Dog that looks like Betty"
+           width="300"
+           class="rounded-3xl shadow-lg">
+    </button>
+    <br><br>
+    <p class="text-slate-600 dark:text-slate-300">Click to give Betty an extra bone!</p>
+    <br>
 
-        <img src="https://yumove.co.uk/cdn/shop/files/Dachshund.jpg?v=1749573704&width=550"
-             alt="Dog that looks like Betty"
-             width="300"
-             class="rounded-3xl shadow-lg">
+    <div class="mt-8">
+      <button id="darkmode-toggle" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-bold py-2 px-4 rounded-full shadow transition-all active:scale-90 cursor-pointer">
+        Switch mode.
       </button>
-      <br><br>
-      <p class="text-slate-600">Click to give Betty an extra bone!</p>
-      <br>
-      <div class="mt-8">
-        <button id="darkmode-toggle" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-full shadow transition-all active:scale-90 cursor-pointer">
-          Switch mode.
-        </button>
-      </div>
+    </div>
 
-      <script>
-        let score = 0;
-        const textScore = document.getElementById("scoredisplay");
-        const clickButton = document.getElementById("plusone");
+    <script>
+      let score = 0;
+      const textScore = document.getElementById("scoredisplay");
+      const clickButton = document.getElementById("plusone");
+      const darkModeToggle = document.getElementById("darkmode-toggle");
 
-        const body = document.getElementById("body");
-        const darkModeToggle = document.getElementById("darkmode-toggle");
-        darkModeToggle.addEventListener("click", () => {
-          body.classList.toggle("bg-white");
-          body.classList.toggle("bg-black");
+      // Super clean: Just toggle the 'dark' class on the document root
+      darkModeToggle.addEventListener("click", () => {
+        document.documentElement.classList.toggle("dark");
+      });
 
-          textScore.classList.toggle("text-slate-700")
-          textScore.classList.toggle("text-slate-400")
+      clickButton.addEventListener("click", (event) => {
+        score = score + 1;
+        textScore.textContent = score;
+        bonesEffect(event);
+      });
 
-          darkModeToggle.classList.toggle("bg-slate-200")
-          darkModeToggle.classList.toggle("bg-slate-600")
-          darkModeToggle.classList.toggle("text-slate-600")
-          darkModeToggle.classList.toggle("text-slate-200")
-          darkModeToggle.classList.toggle("hover:bg-slate-300")
-          darkModeToggle.classList.toggle("hover:bg-slate-500")
-        });
+      function bonesEffect(event) {
+        const bonesCount = 7;
+        for (let i = 0; i < bonesCount; i++) {
+          const bone = document.createElement("div");
+          bone.innerText = "🦴";
+          bone.style.position = "absolute";
+          bone.style.fontSize = "25px";
+          bone.style.pointerEvents = "none";
 
-        clickButton.addEventListener("click", (event) => {
-          score = score + 1;
-          textScore.textContent = score;
-          bonesEffect(event);
-        });
+          const rect = clickButton.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
 
-        function bonesEffect(event) {
-          const bonesCount = 7;
-          for (let i = 0; i<bonesCount; i++) {
-            const bone = document.createElement("div");
-            bone.innerText = "🦴";
-            bone.style.position = "absolute";
-            bone.style.fontSize = "25px";
-            bone.style.pointerEvents = "none";
+          bone.style.left = x + "px";
+          bone.style.top = y + "px";
 
-            const rect = clickButton.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+          clickButton.appendChild(bone);
 
-            bone.style.left = x + "px";
-            bone.style.top = y + "px";
+          const angle = Math.random() * Math.PI * 2;
+          const range = 50 + Math.random() * 80;
+          const endX = Math.cos(angle) * range;
+          const endY = Math.sin(angle) * range;
 
-            clickButton.appendChild(bone);
+          bone.animate([
+            { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
+            { transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) scale(1.5) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+          ], {
+            duration: 600,
+            easing: "ease-out"
+          });
 
-            const angle = Math.random() * Math.PI*2;
-            const range = 50 + Math.random()*80;
-            const endX = Math.cos(angle) * range;
-            const endY = Math.sin(angle) * range;
-
-            bone.animate([
-              {transform: "translate(-50%, -50%) scale(1)", opacity: 1},
-              {transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) scale(1.5) rotate(${Math.random()*360}deg)`, opacity: 0}
-            ], {
-              duration: 600,
-              easing: "ease-out"
-            });
-
-            setTimeout(() => {
-              bone.remove();
-            }, 600);
-          }
+          setTimeout(() => {
+            bone.remove();
+          }, 600);
         }
-
-      </script>
-    </body>
-
+      }
+    </script>
+  </body>
 </html>
